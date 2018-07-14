@@ -16,6 +16,22 @@
     <%= form.text_field :title %>
   </div>
 
+  <%= form.fields_for(:images) do |i| %>
+    <div class="field">
+      <div>
+        <%= i.label :path %>
+        <%= i.file_field :path %>
+        <%= i.hidden_field :path_cache %><!-- for redisplay on validation error -->
+      </div>  
+      <% if i.object&.path.present? %>
+        <%= image_tag i.object.path.url, width: '200' %>
+        <label>
+          delete<%=i.check_box :_destroy%>
+        </label>
+      <% end %>
+    </div>
+  <% end %>  
+
   <div class="actions">
     <%= form.submit %>
   </div>
